@@ -1,38 +1,45 @@
 {
-  "name": "reactgaps",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "@testing-library/jest-dom": "^5.16.4",
-    "@testing-library/react": "^13.3.0",
-    "@testing-library/user-event": "^13.5.0",
-    "react": "^18.1.0",
-    "react-dom": "^18.1.0",
-    "react-scripts": "5.0.1",
-    "web-vitals": "^2.1.4"
-  },
+  "name": "react-light-toast",
+  "version": "1.0.3",
+  "description": "Simple and lightweight toast package for React.js",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "files": [
+    "dist",
+    "README.md"
+  ],
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "build": "rm -rf dist && NODE_ENV=production babel src --out-dir dist --copy-files"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
+  "devDependencies": {
+    "@babel/cli": "^7.18.6",
+    "@babel/core": "^7.18.6",
+    "@babel/preset-env": "^7.18.6",
+    "@babel/preset-react": "^7.18.6",
+    "react": "^18.1.0",
+    "react-dom": "^18.1.0"
   },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  }
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fuadpashayev/react-light-toast.git"
+  },
+  "keywords": [
+    "toast",
+    "react",
+    "light-toast",
+    "toastify",
+    "react-toast",
+    "simple",
+    "lightweight",
+    "react-alert",
+    "alert",
+    "simple-alert",
+    "popup"
+  ],
+  "author": "Fuad Pashayev",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fuadpashayev/react-light-toast/issues"
+  },
+  "homepage": "https://github.com/fuadpashayev/react-light-toast#readme"
 }
