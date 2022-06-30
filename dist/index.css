@@ -1,3 +1,8 @@
+@font-face {
+    font-family: 'Montserrat';
+    src: url('./assets/fonts/Montserrat-Regular.ttf') format('truetype');
+}
+
 :root {
     --toastify-icon-color-info: #3498db;
     --toastify-icon-color-success: #07bc0c;
@@ -8,13 +13,43 @@
 
 .toastArea {
     position: fixed;
-    bottom: 15px;
-    right: 15px;
     display: flex;
     flex-direction: column;
     gap: 15px;
     transition: 330ms;
     z-index: 9999999;
+}
+
+.area-top-left {
+    top: 15px;
+    left: 15px;
+}
+
+.area-top-center {
+    top: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.area-top-right {
+    top: 15px;
+    right: 15px;
+}
+
+.area-bottom-left {
+    bottom: 15px;
+    left: 15px;
+}
+
+.area-bottom-center {
+    bottom: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.area-bottom-right {
+    bottom: 15px;
+    right: 15px;
 }
 
 .reverse {
@@ -28,7 +63,6 @@
     display: flex;
     align-items: center;
     border-radius: 4px;
-    transform: translateX(125%);
     box-shadow: 0 1px 10px 0 rgb(0 0 0 / 10%), 0 2px 15px 0 rgb(0 0 0 / 5%);
     transition: 330ms;
     transition-delay: 500ms;
@@ -36,12 +70,51 @@
     overflow: hidden;
 }
 
-.toastContainer.show {
-    animation: toastIn 0.5s linear forwards;
+/* Left */
+.toastArea[class*="left"] .toastContainer {
+    transform: translateX(-125%);
+}
+.toastArea.area-top-left .show, .toastArea.area-bottom-left .show {
+    animation: toastInLeft 0.5s linear forwards;
+}
+.toastArea.area-top-left .hide, .toastArea.area-bottom-left .hide {
+    animation: toastOutLeft 0.5s ease-in-out forwards;
+}
+
+/* Right */
+.toastArea[class*="right"] .toastContainer {
+    transform: translateX(125%);
+}
+.toastArea.area-top-right .show, .toastArea.area-bottom-right .show {
+    animation: toastInRight 0.5s linear forwards;
+}
+.toastArea.area-top-right .hide, .toastArea.area-bottom-right .hide {
+    animation: toastOutRight 0.5s ease-in-out forwards;
+}
+
+/* Top Center */
+.toastArea.area-top-center .toastContainer {
+    transform: translateY(-200%);
+}
+.toastArea.area-top-center .show {
+    animation: toastInTopCenter 0.35s linear forwards;
+}
+.toastArea.area-top-center .hide {
+    animation: toastOutTopCenter 0.3s ease-in-out forwards;
+}
+
+/* Bottom Center */
+.toastArea.area-bottom-center .toastContainer {
+    transform: translateY(200%);
+}
+.toastArea.area-bottom-center .show {
+    animation: toastInBottomCenter 0.35s linear forwards;
+}
+.toastArea.area-bottom-center .hide {
+    animation: toastOutBottomCenter 0.3s ease-in-out forwards;
 }
 
 .toastContainer.hide {
-    animation: toastOut 0.5s ease-in-out forwards;
     min-height: 0;
     max-height: 0;
     height: 0;
@@ -59,7 +132,7 @@
 }
 
 .toastBar:before {
-    width: 100%; /*var(--progress);*/
+    width: 100%;
     height: 100%;
     display: block;
     content: '';
@@ -99,7 +172,7 @@
     width: calc(100% - 75px);
     text-align: left;
     padding: 10px 0;
-    font-family: 'Courier New', Courier, tahoma, sans-serif;
+    font-family: 'Montserrat';
 }
 
 .toastClose {
@@ -117,7 +190,21 @@
     opacity: 1;
 }
 
-@keyframes toastIn {
+@keyframes toastInLeft {
+    20%, 50%, 100% {transform: translateX(0);} 
+    40% {transform: translateX(50px);} 
+    60% {transform: translateX(0px);} 
+    80% {transform: translateX(20px);} 
+    60% {transform: translateX(0px);} 
+}
+
+@keyframes toastOutLeft {
+    0% {transform: translateX(50px);}
+    20% {transform: translateX(65px);}
+    100% {transform: translateX(-125%);}
+}
+
+@keyframes toastInRight {
     20%, 50%, 100% {transform: translateX(0);} 
     40% {transform: translateX(-50px);} 
     60% {transform: translateX(0px);} 
@@ -125,10 +212,38 @@
     60% {transform: translateX(0px);} 
 }
 
-@keyframes toastOut {
+@keyframes toastOutRight {
     0% {transform: translateX(-50px);}
     20% {transform: translateX(-65px);}
     100% {transform: translateX(125%);}
+}
+
+@keyframes toastInTopCenter {
+    20%, 50%, 100% {transform: translateY(0);} 
+    40% {transform: translateY(50px);} 
+    60% {transform: translateY(0px);} 
+    80% {transform: translateY(20px);} 
+    60% {transform: translateY(0px);} 
+}
+
+@keyframes toastOutTopCenter {
+    0% {transform: translateY(50px);}
+    20% {transform: translateY(65px);}
+    100% {transform: translateY(-200%);}
+}
+
+@keyframes toastInBottomCenter {
+    20%, 50%, 100% {transform: translateY(0);} 
+    40% {transform: translateY(-50px);} 
+    60% {transform: translateY(0px);} 
+    80% {transform: translateY(-20px);} 
+    60% {transform: translateY(0px);} 
+}
+
+@keyframes toastOutBottomCenter {
+    0% {transform: translateY(-50px);}
+    20% {transform: translateY(-65px);}
+    100% {transform: translateY(200%);}
 }
 
 @keyframes toastProgressBar {

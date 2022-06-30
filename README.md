@@ -2,6 +2,11 @@
 Simple and lightweight toast package for React.js
 <br><br>
 
+# Example
+
+<img src="https://i.ibb.co/qsx913G/react-light-toast.png" width="900" style="border-radius:4px" />
+
+<br><br>
 # Installation
 
 ```

@@ -7,6 +7,8 @@ exports.toast = exports.default = void 0;
 
 require("core-js/modules/web.dom-collections.iterator.js");
 
+require("core-js/modules/es.array.includes.js");
+
 require("core-js/modules/web.queue-microtask.js");
 
 require("core-js/modules/es.array.reverse.js");
@@ -74,15 +76,13 @@ const ToastComponent = /*#__PURE__*/(0, _react.forwardRef)((_ref2, ref) => {
     toastData: {
       index,
       removeToast,
-      options
+      toastOptions: {
+        autoClose = true,
+        closeDuration = 3000
+      }
     }
   } = _ref2;
-  let progressDuration = false;
-
-  if (options !== null && options !== void 0 && options.closeDuration && options !== null && options !== void 0 && options.autoClose) {
-    progressDuration = options.closeDuration;
-  }
-
+  const progressDuration = autoClose ? closeDuration : false;
   return /*#__PURE__*/_react.default.createElement("div", {
     className: "toastContainer",
     ref: ref,
@@ -106,27 +106,32 @@ const ToastComponent = /*#__PURE__*/(0, _react.forwardRef)((_ref2, ref) => {
   })));
 });
 const refs = [];
+const availablePostions = ['top-left', 'top-right', 'bottom-left', 'bottom-right', 'top-center', 'bottom-center'];
+const initialOptions = {
+  reverse: false,
+  position: 'bottom-right'
+};
 
 const ToastContainer = _ref3 => {
   let {
-    options
+    options = initialOptions
   } = _ref3;
 
   const [toasts, setToasts] = _react.default.useState([]);
 
   const [removedToasts, setRemovedToasts] = (0, _react.useState)([]);
-  const initialOptions = {
-    autoClose: true,
-    closeDuration: 3000
-  };
+  const toastPosition = availablePostions.includes(options.position) ? options.position : initialOptions.position;
 
   const addToast = function addToast(type, message) {
-    let options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : initialOptions;
+    let toastOptions = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {
+      autoClose: true,
+      closeDuration: 3000
+    };
     const ref = /*#__PURE__*/(0, _react.createRef)();
     const toastData = {
       index: toasts.length,
       removeToast,
-      options
+      toastOptions
     };
 
     const toast = /*#__PURE__*/_react.default.createElement(ToastComponent, {
@@ -140,8 +145,8 @@ const ToastContainer = _ref3 => {
     refs.push(ref);
     queueMicrotask(() => showToast(Math.max(refs.length - 1, 0)));
 
-    if (options.closeDuration) {
-      setTimeout(() => removeToast(toastData.index), options.closeDuration);
+    if (toastOptions.closeDuration) {
+      setTimeout(() => removeToast(toastData.index), toastOptions.closeDuration);
     }
   };
 
@@ -165,7 +170,7 @@ const ToastContainer = _ref3 => {
     toast.add = addToast;
   }, [toasts, refs]);
   return /*#__PURE__*/_react.default.createElement("div", {
-    className: "toastArea".concat(options !== null && options !== void 0 && options.reverse ? ' reverse' : '')
+    className: "toastArea".concat(options.reverse ? ' reverse' : '', " area-").concat(toastPosition)
   }, toasts.map((toast, index) => {
     return /*#__PURE__*/_react.default.createElement(_react.Fragment, {
       key: index

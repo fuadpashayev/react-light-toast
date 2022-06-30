@@ -12,11 +12,8 @@ const Icon = ({ type }) => {
     return icons[type];
 }
 
-const ToastComponent = forwardRef(({ type, message, toastData: { index, removeToast, options } }, ref) => {
-    let progressDuration = false;
-    if(options?.closeDuration && options?.autoClose) {
-        progressDuration = options.closeDuration;
-    }
+const ToastComponent = forwardRef(({ type, message, toastData: { index, removeToast, toastOptions: {autoClose = true, closeDuration = 3000}} }, ref) => {
+    const progressDuration = autoClose ? closeDuration : false;
     return (
         <div className='toastContainer' ref={ref} type={type}>
             {progressDuration && <div className='toastBar' style={{ '--duration': progressDuration + 'ms' }} />}
@@ -28,28 +25,30 @@ const ToastComponent = forwardRef(({ type, message, toastData: { index, removeTo
 });
 
 const refs = [];
-const ToastContainer = ({options}) => {
+
+const availablePostions = ['top-left', 'top-right', 'bottom-left', 'bottom-right', 'top-center', 'bottom-center'];
+const initialOptions = {
+    reverse: false,
+    position: 'bottom-right',
+}
+const ToastContainer = ({options = initialOptions}) => {
     const [toasts, setToasts] = React.useState([]);
     const [removedToasts, setRemovedToasts] = useState([]);
+    const toastPosition = availablePostions.includes(options.position) ? options.position : initialOptions.position;
 
-    const initialOptions = {
-        autoClose: true,
-        closeDuration: 3000,
-    }
-
-    const addToast = (type, message, options = initialOptions) => {
+    const addToast = (type, message, toastOptions = {autoClose: true, closeDuration: 3000}) => {
         const ref = createRef();
         const toastData = {
             index: toasts.length,
             removeToast,
-            options
+            toastOptions
         };
         const toast = <ToastComponent type={type} message={message} toastData={toastData} ref={ref} />;
         setToasts([...toasts, toast]);
         refs.push(ref);
         queueMicrotask(() => showToast(Math.max(refs.length - 1, 0)));
-        if (options.closeDuration) {
-            setTimeout(() => removeToast(toastData.index), options.closeDuration);
+        if (toastOptions.closeDuration) {
+            setTimeout(() => removeToast(toastData.index), toastOptions.closeDuration);
         }
     }
 
@@ -73,7 +72,7 @@ const ToastContainer = ({options}) => {
     }, [toasts, refs]);
 
     return (
-        <div className={`toastArea${options?.reverse ? ' reverse' : ''}`}>
+        <div className={`toastArea${options.reverse ? ' reverse' : ''} area-${toastPosition}`}>
             {toasts.map((toast, index) => {
                 return <Fragment key={index}>{toast}</Fragment>
             })}
