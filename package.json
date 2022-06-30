@@ -1,6 +1,6 @@
 {
   "name": "react-light-toast",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Simple and lightweight toast package for React.js",
   "main": "dist/index.js",
   "module": "dist/index.js",

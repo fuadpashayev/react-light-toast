@@ -1,7 +1,4 @@
-@font-face {
-    font-family: 'Montserrat';
-    src: url('./assets/fonts/Montserrat-Regular.ttf') format('truetype');
-}
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
 
 :root {
     --toastify-icon-color-info: #3498db;
@@ -172,7 +169,7 @@
     width: calc(100% - 75px);
     text-align: left;
     padding: 10px 0;
-    font-family: 'Montserrat';
+    font-family: 'Montserrat', sans-serif;
 }
 
 .toastClose {

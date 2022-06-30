@@ -38,8 +38,14 @@ $ yarn add react-light-toast
 ## ToastContainer options
 ```jsx
     <>
-        <ToastContainer options={{ reverse: true }} /> // reverse order of last toast (last toast adding to top)
+        <ToastContainer options={{ 
+          reverse: true,
+          position: 'bottom-right'
+        }} /> 
     </>
+
+    // reverse: reverse order of last toast (last toast adding to top)
+    // positions: top-right, top-left, bottom-right, bottom-left, top-center, bottom-center // default: bottom-right
 ```
 <br>
 
